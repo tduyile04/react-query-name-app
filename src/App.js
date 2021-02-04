@@ -160,20 +160,18 @@ function Error({ error }) {
   return error && <div>An error occured fetching the data</div>;
 }
 
-function UserList({ data }) {
-  return (
-    data &&
-    data.map(({ id, name, email, bio }) => {
-      return (
-        <div key={id}>
-          <p>Name: {name}</p>
-          <p>Email: {email}</p>
-          <p>Bio: {bio}</p>
-          <hr />
-        </div>
-      );
-    })
-  );
+function UserList({ data = [] }) {
+  if (!Array.isArray(data) || data.length < 1) return null;
+  return data.map(({ id, name, email, bio }) => {
+    return (
+      <div key={id}>
+        <p>Name: {name}</p>
+        <p>Email: {email}</p>
+        <p>Bio: {bio}</p>
+        <hr />
+      </div>
+    );
+  });
 }
 
 function Background() {
