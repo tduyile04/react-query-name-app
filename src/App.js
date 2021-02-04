@@ -7,7 +7,6 @@ import {
   useMutation,
 } from "react-query";
 
-
 const BASE_URL = "http://localhost:8080";
 
 const fetchUsers = async () => {
@@ -145,21 +144,35 @@ function Todo() {
       </form>
       <section>
         <hr />
-        {isLoading && <div>Loading...</div>}
-        {error && <div>An error occured fetching the data</div>}
-        {data &&
-          data.map(({ id, name, email, bio }) => {
-            return (
-              <div key={id}>
-                <p>Name: {name}</p>
-                <p>Email: {email}</p>
-                <p>Bio: {bio}</p>
-                <hr />
-              </div>
-            );
-          })}
+        <Loader isLoading={isLoading} />
+        <Error error={error} />
+        <UserList data={data} />
       </section>
     </div>
+  );
+}
+
+function Loader({ isLoading }) {
+  return isLoading && <div>Loading...</div>;
+}
+
+function Error({ error }) {
+  return error && <div>An error occured fetching the data</div>;
+}
+
+function UserList({ data }) {
+  return (
+    data &&
+    data.map(({ id, name, email, bio }) => {
+      return (
+        <div key={id}>
+          <p>Name: {name}</p>
+          <p>Email: {email}</p>
+          <p>Bio: {bio}</p>
+          <hr />
+        </div>
+      );
+    })
   );
 }
 
